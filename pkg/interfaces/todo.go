@@ -8,3 +8,7 @@ type ToDo struct {
 type ToDoUsecase interface {
 	GetByID(id int64) (ToDo, error)
 }
+
+type ToDoRepository interface {
+	GetByID(id int64) (ToDo, error)
+}

@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/akedev7/go-clean-arch/pkg/todo/delivery/http"
+	"github.com/akedev7/go-clean-arch/pkg/todo/repository"
 	"github.com/akedev7/go-clean-arch/pkg/todo/usecase"
 	"github.com/gin-gonic/gin"
 )
@@ -17,9 +18,16 @@ func main() {
 }
 
 func run() error {
+
+	repo := repository.NewToDoRepository()
+
+	//Inject repo into service
+	usecase := usecase.NewTodoUseCase(repo)
 	router := gin.New()
-	usecase := usecase.NewTodoUseCase()
+
+	//Inject service into handler
 	http.NewToDoHandler(router, usecase)
+
 	router.Run()
 	return nil
 }
